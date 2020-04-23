@@ -2,7 +2,7 @@
 rubric <- list(
   c1 = list(
     name = "Analysis",
-    col = "#e82ed9",
+    col = "#dc46dc",
     text = "This component reflects the quality of your statistical analysis and your ability to present and interpret data. To score highly in this area, you must write your code and run your analysis thoroughly and correctly, report all the relevant statistics clearly and correctly, visualise your data appropriately, and demonstrate how well you understand what the results mean.",
     grade = rev(c("This write-up is close to the standard of articles found in academic journals. It meets the criteria for an outstanding 1<sup>st</sup> but with additional innovation in, or understanding of, the data analytic tools applied to the research question.",
               "The study and write-up show initiative and originality. It meets the criteria for a clear 1<sup>st</sup> but with exceptional clarity and coherence or perhaps shows a solid use and understanding of analytic tools beyond what has been taught.",
