@@ -2,7 +2,7 @@
 ##### upload file as comments on assignemnts
 
 ######################## EDIT AS APPROPRIATE ################################
-# EDIT PATH to where you saved students' .Rmd files
+# EDIT PATH to the OneDrive folder we shared with you
 fpath <- "marking/AnD/2019-20"
 # insert your Canvas token
 set_canvas_token("")
@@ -55,3 +55,4 @@ for (i in 1:nrow(submissions)) {
                per_page = 100)
   attach_resp <- rcanvas:::canvas_query(url, args, "PUT")
 }
+
