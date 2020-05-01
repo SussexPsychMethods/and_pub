@@ -4,7 +4,7 @@
 
 ######################## EDIT AS APPROPRIATE ################################
 # EDIT PATH to the OneDrive folder we shared with you
-marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Milan"
+marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Alaa"
 #############################################################################
 
 # lists default and required packages so they don't get unloaded
@@ -12,7 +12,7 @@ default_pkgs <-  c("base", "teachR", "survival", getOption("defaultPackages"))
 # lists installed packages
 installed_pkgs <- installed.packages()[ , 1]
 # objects to keep when cleaning environment
-keep_obj <- c("candidate_number", "default_pkgs", "i", "installed_pkgs",
+keep_obj <- c("candidate_number", "default_pkgs", "ff", "i", "installed_pkgs",
               "keep_obj", "marking_path", "marks", "num_cols", "rubric")
 
 knitr::opts_chunk$set(error = T, message= F, warning = F)
