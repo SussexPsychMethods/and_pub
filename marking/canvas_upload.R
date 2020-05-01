@@ -5,31 +5,26 @@
 # EDIT PATH to the OneDrive folder we shared with you
 fpath <- "marking/AnD/2019-20"
 # insert your Canvas token
-set_canvas_token("")
+canvas_token <- ""
 #############################################################################
 
 set_canvas_domain("https://canvas.sussex.ac.uk")
 
-course_id <- 9242
-assign_id <- 25272
-submissions <- get_submissions(course_id, "assignments", assign_id) %>%
-  filter(workflow_state == "submitted")
-ff <- unlist(lapply(submissions$attachments, function(x) x$filename))
-ff <- gsub("\\+", "_", ff)
+and_id <- 9242
+report_id <- 25272
+submissions <- teachR::get.submitted(canvas_token,
+                                     course_id = and_id, assign_id = report_id)
+ff <- list.files(fpath, pattern = "\\.html$")
+ids <- sub("(\\d+).*", "\\1", ff)
+submissions <- submissions[submissions$user_id %in% ids, ]
 
-good_submission <- grepl("\\.rmd$", tolower(ff))
-
-ff <- ff[good_submission]
-ff <- gsub("\\.[rR]md$", "_marked.html", ff)
-
-submissions <- submissions[good_submission, ]
 
 for (i in 1:nrow(submissions)) {
   
   url <- paste0(
     "https://canvas.sussex.ac.uk/api/v1/courses/",
     course_id, "/assignments/", assign_id, "/submissions/",
-    submissions$user_id[i], "/comments/files")
+    ids[i], "/comments/files")
   
   file_size <- file.info(file.path(fpath, ff[i]))$size
   

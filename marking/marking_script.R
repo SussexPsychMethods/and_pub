@@ -3,8 +3,6 @@
 # Only run once you've finised marking and entered marks in the Google sheet
 
 ######################## EDIT AS APPROPRIATE ################################
-# You must use the name in the Google spreadsheet!
-marker <- "Milan"
 # EDIT PATH to the OneDrive folder we shared with you
 marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Milan"
 #############################################################################
@@ -29,7 +27,8 @@ marks <- read.csv("https://spreadsheets.google.com/feeds/download/spreadsheets/E
 
 ff <- list.files(file.path(marking_path), pattern="\\.rmd$", ignore.case = T)
 ff <- grep("_marked\\.", ff, invert = T, value = T)
-marks <- marks[marks$file_name %in% ff, ]
+ids <- sub("(\\d+).*", "\\1", ff)
+marks <- marks[marks$user_id %in% ids, ]
 
 num_cols <- c("analysis", "crit_thinking", "theory_understand", "organisation", "research", "grade", "mod_mark")
 marks[ , num_cols] <- lapply(marks[ , num_cols], function(x) if (!is.numeric(x)) as.integer(as.character(x)))
@@ -43,7 +42,8 @@ for (i in 1:nrow(marks)) {
   teachR:::unlibrary() # unload packages except for default_pkgs
   
   # cand no must be in global env for knitting
-  candidate_number <- as.numeric(marks$cand_no[i])
+  tmp <- readLines(file.path(marking_path, ff[i]))
+  eval(parse(text = grep("candidate_number", tmp, value = T)))
   
   # categorise partial marks into grades (1st, 2:1, 2:2...)
   rubric_grades <- cut(
@@ -55,7 +55,7 @@ for (i in 1:nrow(marks)) {
   
   # knit
   try(
-    mark(file = file.path(marking_path, marks$file_name[i]),
+    mark(file = file.path(marking_path, ff[i]),
          mark = marks$final_grade[i], rubric_grades = rubric_grades,
          rubric = rubric, include_rubric_desc = T, study = marks$study[i], include_results = T,
          results_obj = teachR:::res(marks$study[i]), feedback = T,
@@ -68,3 +68,4 @@ rm(list = setdiff(ls(), keep_obj))
 teachR:::unlibrary() # unload packages except for default_pkgs
 # revert back to default
 knitr::opts_chunk$set(error = F, message = T, warning = T)
+
