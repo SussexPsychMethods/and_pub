@@ -4,7 +4,10 @@
 
 ######################## EDIT AS APPROPRIATE ################################
 # EDIT PATH to the OneDrive folder we shared with you
-marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Alaa"
+marking_path <- "C:/work/OneDrive - University of Sussex/marking/AnD/2019-20/Milan"
+
+marks <- read.csv("https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=19CXCZk28CQzX4MzQ86a5U-ijYQvP47x0mfX7pQk6KKo&exportFormat=csv", stringsAsFactors = F)
+# marks <- read.csv("path/to/csv/file.csv", stringsAsFactors = F)
 #############################################################################
 
 # lists default and required packages so they don't get unloaded
@@ -21,9 +24,6 @@ library(teachR)
 
 # source the marking rubric
 source("https://raw.githubusercontent.com/SussexPsychMethods/and_pub/master/marking/sussex_rubric.R")
-
-marks <- read.csv("https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=19CXCZk28CQzX4MzQ86a5U-ijYQvP47x0mfX7pQk6KKo&exportFormat=csv", stringsAsFactors = F)
-
 
 ff <- list.files(file.path(marking_path), pattern="\\.rmd$", ignore.case = T)
 ff <- grep("_marked\\.", ff, invert = T, value = T)
