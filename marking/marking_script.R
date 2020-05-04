@@ -31,7 +31,7 @@ ids <- sub("(\\d+).*", "\\1", ff)
 marks <- marks[marks$user_id %in% ids, ]
 
 num_cols <- c("analysis", "crit_thinking", "theory_understand", "organisation", "research", "grade", "mod_mark")
-marks[ , num_cols] <- lapply(marks[ , num_cols], function(x) if (!is.numeric(x)) as.integer(as.character(x)))
+marks[ , num_cols] <- lapply(marks[ , num_cols], function(x) if (!is.numeric(x)) as.integer(as.character(x)) else x)
 marks$final_grade <- marks$mod_mark
 ind <- is.na(marks$mod_mark)
 marks$final_grade[ind] <- marks$grade[ind]
