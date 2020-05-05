@@ -19,6 +19,7 @@ keep_obj <- c("candidate_number", "default_pkgs", "ff", "i", "installed_pkgs",
               "keep_obj", "marking_path", "marks", "num_cols", "rubric")
 
 knitr::opts_chunk$set(error = T, message= F, warning = F)
+RNGkind(sample.kind = "Rejection") # set correct RNG kind
 
 library(teachR)
 
