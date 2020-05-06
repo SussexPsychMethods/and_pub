@@ -15,16 +15,20 @@ default_pkgs <-  c("base", "teachR", "survival", getOption("defaultPackages"))
 # lists installed packages
 installed_pkgs <- installed.packages()[ , 1]
 # objects to keep when cleaning environment
-keep_obj <- c("candidate_number", "default_pkgs", "ff", "i", "installed_pkgs",
-              "keep_obj", "marking_path", "marks", "num_cols", "rubric")
+keep_obj <- c("candidate_number", "default_pkgs", "fdbck_boiler", "ff", "i",
+              "installed_pkgs", "keep_obj", "marking_path", "marks", "num_cols",
+              "rubric")
 
 knitr::opts_chunk$set(error = T, message= F, warning = F)
-RNGkind(sample.kind = "Rejection") # set correct RNG kind
 
 library(teachR)
 
 # source the marking rubric
 source("https://raw.githubusercontent.com/SussexPsychMethods/and_pub/master/marking/sussex_rubric.R")
+
+marks <- read.csv("https://spreadsheets.google.com/feeds/download/spreadsheets/Export?key=19CXCZk28CQzX4MzQ86a5U-ijYQvP47x0mfX7pQk6KKo&exportFormat=csv", stringsAsFactors = F)
+fdbck_boiler <- readLines(
+  "https://raw.githubusercontent.com/SussexPsychMethods/and_pub/master/marking/fdbck_boilerplate.txt")
 
 ff <- list.files(file.path(marking_path), pattern="\\.rmd$", ignore.case = T)
 ff <- grep("_marked\\.", ff, invert = T, value = T)
@@ -59,7 +63,7 @@ for (i in 1:nrow(marks)) {
     mark(file = file.path(marking_path, ff[i]),
          mark = marks$final_grade[i], rubric_grades = rubric_grades,
          rubric = rubric, include_rubric_desc = T, study = marks$study[i], include_results = T,
-         results_obj = teachR:::res(marks$study[i]), feedback = T,
+         results_obj = teachR:::res(marks$study[i]), feedback = T, fdbck_boiler_text = fdbck_boiler,
          install_missing_pkgs = T, installed_pkgs = installed_pkgs, collapse_chunks = T)
   )
 }
@@ -69,4 +73,3 @@ rm(list = setdiff(ls(), keep_obj))
 teachR:::unlibrary() # unload packages except for default_pkgs
 # revert back to default
 knitr::opts_chunk$set(error = F, message = T, warning = T)
-
